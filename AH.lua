@@ -3,10 +3,10 @@ function Merchant.AH.GetKeyFromItemInfo(replicateItemInfo)
   local name = replicateItemInfo[1]
   local itemId = replicateItemInfo[17]
   --Special case for pets in cages
-  if itemId==82800 then
-    if name~=nil then
+  if itemId == 82800 then
+    if name ~= nil then
       local speciesId, _ = C_PetJournal.FindPetIDByName(name)
-      return "p:"..tostring(speciesId)
+      return "p:" .. tostring(speciesId)
     else
       return nil
     end
@@ -14,6 +14,8 @@ function Merchant.AH.GetKeyFromItemInfo(replicateItemInfo)
     return tostring(itemId)
   end
 end
+
+--------------------------------------------------------------------------------
 
 function Merchant.AH.ProcessPrices(prices)
   for itemKey, itemPrices in pairs(prices) do
@@ -58,8 +60,6 @@ function Merchant.AH.Scan()
 		end
 	end
 
-  -- Merchant_Vars.Accounts.Auctions[UnitName("player")] = playerAuctions
-
   Merchant.AH.ProcessPrices(prices)
 end
 
@@ -74,22 +74,24 @@ function Merchant.AH.FetchPlayerAuctions(frame)
     for i = 1, numOwnedAuctions do
       local auction = C_AuctionHouse.GetOwnedAuctionInfo(i)
       local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(auction.itemKey)
-      local displayName = AuctionHouseUtil.GetItemDisplayTextFromItemKey(
-        auction.itemKey,
-        itemKeyInfo,
-        false
-      )
+      local _, _, itemRarity = GetItemInfo(auction.itemKey.itemID)
       table.insert(playerAuctions, {
-        ItemId = auction.itemKey.itemID,
-        ItemName = Merchant.Utils.RemoveColor(displayName),
-        ItemDisplayName = displayName,
+        ItemID = auction.itemKey.itemID,
+        Rarity = itemRarity,
         Quantity = auction.quantity,
         Buyout = auction.buyoutAmount,
-        Total = auction.quantity * auction.buyoutAmount
+        Total = auction.quantity * auction.buyoutAmount,
+        Status = auction.status
       })
     end
-    Merchant_Vars.Accounts[Merchant.RealmName].Auctions[Merchant.CharName]
-      = playerAuctions
+    Merchant_Vars.Accounts[Merchant.RealmName].Auctions[Merchant.CharName] = playerAuctions
     FrameUtil.UnregisterFrameForEvents(frame, { "OWNED_AUCTIONS_UPDATED" })
   end
+end
+
+--------------------------------------------------------------------------------
+
+function Merchant.AH.GetItemMarketValue(itemID)
+  local value = Merchant_Vars.AHPrices[Merchant.RealmName][itemID]
+  return value
 end

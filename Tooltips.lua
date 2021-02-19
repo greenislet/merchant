@@ -1,6 +1,5 @@
 local _, addonTable = ...
 local zc = addonTable.zc
-
 local L = Merchant.Locales.GetString
 
 --------------------------------------------------------------------------------
@@ -10,13 +9,10 @@ function Merchant.Tooltips.ShowPriceInTooltip(tooltip, link, count)
   local price = Merchant_Vars.AHPrices[Merchant.RealmName][key]
   local show = false
   if price ~= nil then
-    tooltip:AddDoubleLine("|cFF" .. Merchant.Constants.UI.MAIN_COLOR
-      .. L("AH_PRICE"), "|cFFFFFFFF" .. zc.priceToMoneyString(price, true))
+    tooltip:AddDoubleLine("|cFF" .. Merchant.Constants.UI.MAIN_COLOR .. L("AH_PRICE"), "|cFFFFFFFF" .. zc.priceToMoneyString(price, true))
     show = true
     if count ~= nil and count > 1 then
-      tooltip:AddDoubleLine("|cFF" .. Merchant.Constants.UI.MAIN_COLOR
-        .. L("AH_TOTAL"), "|cFFFFFFFF"
-        .. zc.priceToMoneyString(count * price, true))
+      tooltip:AddDoubleLine("|cFF" .. Merchant.Constants.UI.MAIN_COLOR .. L("AH_TOTAL"), "|cFFFFFFFF" .. zc.priceToMoneyString(count * price, true))
     end
   end
 
@@ -102,8 +98,7 @@ hooksecurefunc (GameTooltip, "SetGuildBankItem",
 hooksecurefunc( GameTooltip, 'SetRecipeResultItem',
   function(tip, recipeResultItemId)
     local itemLink = C_TradeSkillUI.GetRecipeItemLink(recipeResultItemId)
-    local itemCount
-      = C_TradeSkillUI.GetRecipeNumItemsProduced(recipeResultItemId)
+    local itemCount = C_TradeSkillUI.GetRecipeNumItemsProduced(recipeResultItemId)
     Merchant.Tooltips.ShowPriceInTooltip(tip, itemLink, itemCount)
   end
 )
@@ -113,8 +108,7 @@ hooksecurefunc( GameTooltip, 'SetRecipeResultItem',
 hooksecurefunc( GameTooltip, 'SetRecipeReagentItem',
   function( tip, reagentId, index )
     local itemLink = C_TradeSkillUI.GetRecipeReagentItemLink(reagentId, index)
-    local itemCount
-      = select(3, C_TradeSkillUI.GetRecipeReagentInfo(reagentId, index))
+    local itemCount = select(3, C_TradeSkillUI.GetRecipeReagentInfo(reagentId, index))
     Merchant.Tooltips.ShowPriceInTooltip(tip, itemLink, itemCount)
   end
 )

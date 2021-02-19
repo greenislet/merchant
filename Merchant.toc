@@ -1,7 +1,7 @@
-## Interface: 80300
+## Interface: 90002
 ## Title: Merchant
 ## Author: VanillaSky
-## Version: 0.2.0
+## Version: 0.3.0
 ## SavedVariables: Merchant_Vars
 
 libs\LibStub.lua
@@ -21,7 +21,13 @@ Utils.lua
 AH.lua
 Tooltips.lua
 
-UI.lua
+UI/Auctions.lua
+UI/Stockpile.lua
+UI/Stockpile_Table.lua
+UI/Stockpile_Grid.lua
+UI/Prices.lua
+UI/Options.lua
+UI/Main.lua
 
 Merchant.lua
 
