@@ -65,4 +65,13 @@ function Merchant.UI.Options.Fill(frame)
       Merchant_Vars.Config.Autoscan = false
     end
   end)
+
+  y = y + 30
+  local button = CreateFrame("Button", "$parentForceScanButton", frame, "UIPanelButtonTemplate")
+  button:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 5, 5 - y)
+  button:SetSize(180, 30)
+  button:SetText("Reset autoscan cooldown")
+  button:SetScript("OnClick", function(self)
+    Merchant_Vars.LastScanTime = time() - 15 * 60
+  end)
 end

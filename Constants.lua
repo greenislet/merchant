@@ -1,4 +1,4 @@
-Merchant.Constants.VERSION = "0.2.32"
+Merchant.Constants.VERSION = "0.3.1"
 
 Merchant.Constants.UI = {
   MAIN_COLOR = "FF7C2C",
